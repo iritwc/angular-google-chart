@@ -1,0 +1,27 @@
+.container form select, .container form input {
+   width: 100%;
+}
+
+.form-group label {
+    width: 120px;
+}
+
+.container form {
+    margin: 10px auto 10px 10px;
+    max-width: 320px;
+}
+
+.form-group {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-between;
+}
+
+.form-group.submit {
+    justify-content: flex-end;
+}
+
+.form-group.submit button{
+    width: 80px;
+    border-radius: unset;
+}

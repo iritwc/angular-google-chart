@@ -1,0 +1,22 @@
+
+<div class="container">
+<form (ngSubmit)="onSubmit()" >
+
+  <div class="form-group">
+    <label for="countries">Countries</label>
+    <select id="countries" name="countries" [(ngModel)]="state.country" required>
+      <option *ngFor="let cntry of countries" [value]="cntry">{{cntry}}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="counter">Count</label>
+    <input [(ngModel)]="state.count" name="counter" required id="counter" min="0" />
+  </div>
+
+  <div class="form-group submit">
+    <button type="submit">Submit</button>
+  </div>
+
+</form>
+</div>
