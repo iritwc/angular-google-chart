@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {Subject, interval } from 'rxjs';
+import {timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import {GeoChartBaseService} from '../geo-chart-base.service';
@@ -14,8 +14,6 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
   elementId: string;
   timer$;
-  polling$ = new Subject<string>();
-
   constructor(private geoChartBaseService: GeoChartBaseService,
               private geoChartService: GeoChartService) {
         this.elementId = 'regions_div';
@@ -23,16 +21,12 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
       // apply the polling as an interval using Subject
-      this.timer$ = interval(20000)
-          .subscribe(() => this.polling$.next(new Date().toString()));
-      // handle chart data request
-      this.polling$.pipe(switchMap(() => this.geoChartService.get()))
-        .subscribe(users => {
-              console.log('subscribe users');
+      this.timer$ = timer(0, 10000).pipe(switchMap(() => this.geoChartService.get()))
+          .subscribe(users => {
               const data = [['Country', 'Users'], ...users.map(val => [val.country, val.count])];
               this.geoChartBaseService.BuildGeoChart(this.elementId, data);
-      });
-      this.polling$.next(''); // first trigger - with initial value
+          });
+
   }
 
   ngOnDestroy() {
