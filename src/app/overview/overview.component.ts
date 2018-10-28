@@ -20,13 +20,11 @@ export class OverviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-      // apply the polling as an interval using Subject
-      this.timer$ = timer(0, 10000).pipe(switchMap(() => this.geoChartService.get()))
+      this.timer$ = timer(0, 20000).pipe(switchMap(() => this.geoChartService.get()))
           .subscribe(users => {
               const data = [['Country', 'Users'], ...users.map(val => [val.country, val.count])];
               this.geoChartBaseService.BuildGeoChart(this.elementId, data);
           });
-
   }
 
   ngOnDestroy() {
